@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Validator;
@@ -108,5 +110,22 @@ public function logout(Request $request)
     ]);
 
 }
+public function update(Request $request)    //Update profile 
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string',
+        'email' => [
+            'required',
+            'email',
+            Rule::unique('users')->ignore(auth()->id())
+        ]
+    ]);
+
+    auth()->user()->update($validatedData);
+
+    return response()->json($validatedData, Response::HTTP_ACCEPTED);
+
+}
 }
 
+ 
