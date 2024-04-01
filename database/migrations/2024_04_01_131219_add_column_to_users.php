@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('profile_pic', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone')->after('email_verified_at')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('profile_pic', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
